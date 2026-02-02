@@ -48,6 +48,19 @@ const Track = require('../models/track')
 
 // DELETE	delete	200	/tracks/:id	Delete a track
 
+async function delete(req, res) {
+    try {
+        const deletedTrack = await Track.findByIdAndDelete(req.params.id);
+        if (!deletedTrack) {
+            return res.status(404).json({ message: 'Track not found' });
+        }
+        res.status(200).json(deletedTrack);
+    }
+    catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
 
 
 
