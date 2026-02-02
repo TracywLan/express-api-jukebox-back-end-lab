@@ -5,17 +5,17 @@ const Track = require('../models/track')
 
 
 // POST	create	201	/tracks	Create a track
-router.post('/tracks', async (req,res)=>{
+router.post('/', async (req,res)=>{
     try {
         const newTrack = await Track.create(req.body)
         res.status(201).json(newTrack)
     } catch (error) {
-        res.status(500).json({ error: 'Internal Servre Error'})
+        res.status(500).json({ error: 'Internal Servre Error'}) 
     }
 })
 
 // GET	index	200	/tracks	List all tracks
-router.get("/tracks", async (req,res)=>{
+router.get("/", async (req,res)=>{
     try {
         const tracks = await Track.find();
         res.status(200).json(tracks);
@@ -28,7 +28,7 @@ router.get("/tracks", async (req,res)=>{
 // GET	show	200	/tracks/:id	Get a single track
 router.get('/:id', async (req, res) => {
     try{
-        const foundTrack = await findByid(req.params.id);
+        const foundTrack = await findById(req.params.id);
         if(!foundTrack) return res.status(404).json({ message: 'Track not found! Try again! '});
         res.status(200).json(foundTrack);
     } catch(err) {
