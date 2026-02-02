@@ -48,6 +48,25 @@ const Track = require('../models/track')
 
 // DELETE	delete	200	/tracks/:id	Delete a track
 
+// POST /tracks add new tracks
+router.post('/tracks', async (req,res)=>{
+    try {
+        const newTrack = await Track.create(req.body)
+        res.status(201).json(newTrack)
+    } catch (error) {
+        res.status(500).json({ error: 'Internal Servre Error'})
+    }
+})
+
+router.get("/tracks", async (req,res)=>{
+    try {
+        const tracks = await Track.find();
+        res.status(200).json(tracks);
+    } catch (error) {
+        res.status(500).json({ error: 'Internal Servre Error'})
+        
+    }
+})
 
 
 
