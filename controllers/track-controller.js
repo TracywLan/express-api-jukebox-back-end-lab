@@ -10,7 +10,7 @@ router.post('/', async (req,res)=>{
         const newTrack = await Track.create(req.body)
         res.status(201).json(newTrack)
     } catch (error) {
-        res.status(500).json({ error: 'Internal Servre Error'}) 
+        res.status(500).json({ error: 'Internal Server Error'}) 
     }
 })
 
@@ -20,7 +20,7 @@ router.get("/", async (req,res)=>{
         const tracks = await Track.find();
         res.status(200).json(tracks);
     } catch (error) {
-        res.status(500).json({ error: 'Internal Servre Error'})
+        res.status(500).json({ error: 'Internal Server Error'})
         
     }
 })
@@ -28,7 +28,7 @@ router.get("/", async (req,res)=>{
 // GET	show	200	/tracks/:id	Get a single track
 router.get('/:id', async (req, res) => {
     try{
-        const foundTrack = await findById(req.params.id);
+        const foundTrack = await Track.findById(req.params.id);
         if(!foundTrack) return res.status(404).json({ message: 'Track not found! Try again! '});
         res.status(200).json(foundTrack);
     } catch(err) {
@@ -39,7 +39,7 @@ router.get('/:id', async (req, res) => {
 // PUT	update	200	/tracks/:id	Update a track
 router.put('/:id', async( req, res ) => {
     try {
-        const updatedTrack = await Track.findOneAndUpdate(req.params.id, req.body, {new: true,});
+        const updatedTrack = await Track.findByIdAndUpdate(req.params.id, req.body, {new: true,});
         if(!updatedTrack) return res.status(404).json({ message: 'Track not found! Try again! '});
         res.status(200).json(updatedTrack);
     } catch(err) {
@@ -49,18 +49,18 @@ router.put('/:id', async( req, res ) => {
 
 // DELETE	delete	200	/tracks/:id	Delete a track
 
-async function delete(req, res) {
-    try {
-        const deletedTrack = await Track.findByIdAndDelete(req.params.id);
-        if (!deletedTrack) {
-            return res.status(404).json({ message: 'Track not found' });
-        }
-        res.status(200).json(deletedTrack);
-    }
-    catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-}
+// async function delete(req, res) {
+//     try {
+//         const deletedTrack = await Track.findByIdAndDelete(req.params.id);
+//         if (!deletedTrack) {
+//             return res.status(404).json({ message: 'Track not found' });
+//         }
+//         res.status(200).json(deletedTrack);
+//     }
+//     catch (error) {
+//         res.status(500).json({ message: error.message });
+//     }
+// }
 
 
 module.exports = router
