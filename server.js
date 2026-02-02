@@ -19,7 +19,7 @@ app.use(express.json());
 app.use(logger('dev'));
 
 // Routes go here
-app.use(trackController)
+app.use('/tracks', trackController)
 
 app.listen(3000, () => {
   console.log('The express app is ready at localhost:3000');
