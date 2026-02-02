@@ -43,8 +43,26 @@ const Track = require('../models/track')
 // GET	index	200	/tracks	List all tracks
 
 // GET	show	200	/tracks/:id	Get a single track
+router.get('/:id', async (req, res) => {
+    try{
+        const foundTrack = await findByid(req.params.id);
+        if(!foundTrack) return res.status(404).json({ message: 'Track not found! Try again! '});
+        res.status(200).json(foundTrack);
+    } catch(err) {
+        res.status(500).json({ err: err.message })
+    }
+})
 
 // PUT	update	200	/tracks/:id	Update a track
+router.put('/:id', async( req, res ) => {
+    try {
+        const updatedTrack = await Track.findOneAndUpdate(req.params.id, req.body, {new: true,});
+        if(!updatedTrack) return res.status(404).json({ message: 'Track not found! Try again! '});
+        res.status(200).json(updatedTrack);
+    } catch(err) {
+        res.status(500).json({ err: err.message })
+    }
+})
 
 // DELETE	delete	200	/tracks/:id	Delete a track
 
